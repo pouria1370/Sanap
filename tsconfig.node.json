@@ -18,12 +18,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-    "baseUrl": "./", // Base directory for resolving non-relative imports
-    "paths": {
-      "@components/*": ["src/Components/*"], // Alias for components
-      "@utils/*": ["src/utils/*"] // Alias for utilities
-    }
+    "noUncheckedSideEffectImports": true
   },
   "include": ["vite.config.ts"]
 }

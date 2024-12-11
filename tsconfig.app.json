@@ -14,13 +14,21 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
-
+    "types": ["node"],
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": "./", // Base directory for resolving non-relative imports
+    "paths": {
+      "@components/*": ["src/Components/*"], // Alias for components
+      "@customTypes/*": ["src/Types/*"], // Alias for Types
+      "@hooks/*": ["src/Hooks/*"], // Alias for Hooks
+      "@store/*": ["src/Store/*"], // Alias for Store
+      "@assets/*": ["src/Assets/*"] // Alias for Store
+    }
   },
   "include": ["src"]
 }
