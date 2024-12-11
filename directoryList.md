@@ -1,0 +1,22 @@
+|-- undefined
+    |-- .gitignore
+    |-- directoryList.md
+    |-- eslint.config.js
+    |-- index.html
+    |-- package.json
+    |-- pnpm-lock.yaml
+    |-- README.md
+    |-- tsconfig.app.json
+    |-- tsconfig.json
+    |-- tsconfig.node.json
+    |-- vite.config.ts
+    |-- public
+    |   |-- vite.svg
+    |-- src
+        |-- App.css
+        |-- App.tsx
+        |-- index.css
+        |-- main.tsx
+        |-- vite-env.d.ts
+        |-- assets
+            |-- react.svg
