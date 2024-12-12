@@ -12,3 +12,13 @@ export type TOtpStore = {
 export type TMobilePhoneFormType = {
   mobile: string;
 };
+/**
+ *@description This Type is used just for ConfirmationCodeForm
+ */
+export type TConfirmationCodeFormType = {
+  first: string;
+  second: string;
+  third: string;
+  fourth: string;
+  fifth: string;
+};
