@@ -2,8 +2,8 @@
  *@description This Type is used just for Store
  */
 export type TOtpStore = {
-  otp: string;
-  setOtp: (input: string) => void;
+  otpForm: TOtpFormChildrenType;
+  setOtpForm: (input: TOtpFormChildrenType) => void;
 };
 
 /**
@@ -42,3 +42,11 @@ export type TNameAndFamilyFormType = {
   name: string;
   family: string;
 };
+/**
+ *@description This Type is used just for  OtpformChildren
+ */
+export type TOtpFormChildrenType =
+  | "ConfirmationCodeForm"
+  | "IdentityForm"
+  | "MobilePhoneForm"
+  | "NameAndFamilyForm";
