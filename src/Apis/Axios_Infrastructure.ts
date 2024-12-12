@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const Axios = axios.create({
-  baseURL: "https://stage-api.sanaap.co/api/v2/app/", // Replace with your API URL
+  baseURL: "https://stage-api.sanaap.co", // Replace with your API URL
   headers: {
     "Content-Type": "application/json",
   },
