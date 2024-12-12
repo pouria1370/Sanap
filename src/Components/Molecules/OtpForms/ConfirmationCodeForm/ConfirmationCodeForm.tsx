@@ -4,15 +4,25 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ConfirmationCodeFormSchema } from "./ConfirmationCodeFormSchema";
 import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
+import useValidateRepresentationCode from "@apis/OtpForms/Hooks/useValidateRepresentationCode";
+import { useOtpForm } from "@store/OtpForms/useOtpForm";
 const ConfirmationCodeForm = () => {
   const form = useForm<TConfirmationCodeFormType>({
     resolver: zodResolver(ConfirmationCodeFormSchema),
     mode: "onBlur",
   });
-
+  const mutate = useValidateRepresentationCode();
+  const context = useOtpForm();
+  const onSubmit = async (formData: TConfirmationCodeFormType) => {
+    mutate.mutateAsync().then((res) => context.setOtpForm("NameAndFamilyForm"));
+  };
   return (
     <FormLayout header="کد تائید را وارد کنید" subHeader="">
-      <form className="flex flex-col gap-8 items-center" {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-8 items-center"
+        {...form}
+      >
         <div className="flex flex-row gap-2">
           <Controller
             name="first"

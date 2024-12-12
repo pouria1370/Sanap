@@ -13,18 +13,52 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IdentityFormSchema } from "./IdentityFormSchema";
 import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
 import { useState } from "react";
+import useSetIdentity from "@apis/OtpForms/Hooks/useSetIdentity";
+import { useOtpForm } from "@store/OtpForms/useOtpForm";
+import { useAuth } from "@store/Auth/useAuth";
 const IdentityForm = () => {
   const form = useForm<TIdentityFormType>({
     resolver: zodResolver(IdentityFormSchema),
     mode: "onBlur",
   });
-  const [representationType, setRepresentationType] = useState("Real");
+  const [representationType, setRepresentationType] = useState("real");
+  /*
+TODO HERE I MUST FINISH THE FORM
+
+*/
+  const mutate = useSetIdentity();
+  const context = useOtpForm();
+  const authContext = useAuth();
+  const onSubmit = async (formData: TIdentityFormType) => {
+    // mutate
+    //   .mutateAsync({
+    //     address: formData.address,
+    //     agency_type: formData.representationType,
+    //     agent_code: formData.representationCode,
+    //     city_code: formData.city,
+    //     county: formData.city,
+    //     first_name: context.fullName.name,
+    //     last_name: context.fullName.family,
+    //     insurance_branch: formData.branch,
+    //     phone: formData.phone,
+    //     Name: formData.representationName,
+    //     phone_number: "09000000009",
+    //     province: formData.state,
+    //   })
+    //   .then((res) => {
+    //     authContext.setToken("This is Token");
+    //   });
+    authContext.setToken("This is Token");
+    console.log("what");
+  };
+  console.log(form.formState.dirtyFields);
   return (
-    <FormLayout
-      header="شماره موبایل خود را وارد کنید"
-      subHeader="کد تائید برای شما ارسال خواهد شد"
-    >
-      <form className="flex flex-col gap-5 items-center" {...form}>
+    <FormLayout>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-5 items-center"
+        {...form}
+      >
         <Controller
           name="representationCode"
           control={form.control}
@@ -167,22 +201,23 @@ const IdentityForm = () => {
                   نوع نمایندگی :
                 </FormLabel>
                 <RadioGroup
-                  aria-labelledby="demo-controlled-radio-buttons-group"
-                  name="controlled-radio-buttons-group"
+                  {...form.register("representationType")}
+                  {...field}
+                  ref={field.ref}
                   value={representationType}
                   onChange={(e) => {
-                    field.onChange();
                     setRepresentationType(e.target.value);
+                    field.onChange(e.target.value);
                   }}
                   row
                 >
                   <FormControlLabel
-                    value="Real"
+                    value="real"
                     control={<Radio />}
                     label="حقیقی"
                   />
                   <FormControlLabel
-                    value="State"
+                    value="legal"
                     control={<Radio />}
                     label="حقوقی"
                   />
@@ -192,7 +227,7 @@ const IdentityForm = () => {
           />{" "}
         </div>
 
-        {representationType === "Real" && (
+        {representationType === "real" && (
           <Controller
             name="branch"
             control={form.control}
@@ -219,6 +254,9 @@ const IdentityForm = () => {
           type="submit"
           variant="contained"
           className="bg-primary-100 rounded-lg text-slate-100 w-full"
+          disabled={
+            JSON.stringify(form.formState.errors) !== "{}" ? true : false
+          }
         >
           ادامه
         </Button>

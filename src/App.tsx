@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import "./App.css";
-import Layout from "@components/Molecules/OtpForms/Layout/Layout";
 
 import OtpFormsViewer from "./Pages/OtpFormsViewer";
 import PageNotFound from "./Pages/PageNotFound";
@@ -13,9 +12,7 @@ function App() {
         <Route index element={<OtpFormsViewer />} />
         <Route path="/otp" element={<OtpFormsViewer />} />
         <Route element={<RequireAuth />}>
-          <Route element={<Layout />}>
-            <Route path="/welcome" element={<Waiting />} />
-          </Route>
+          <Route path="/welcome" element={<Waiting />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>

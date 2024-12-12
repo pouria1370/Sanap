@@ -3,7 +3,7 @@ import OtpFormService from "../OtpFormServices";
 
 const useGetInsurances = () => {
   return useMutation({
-    mutationFn: () => OtpFormService.getInsurances(),
+    mutationFn: () => OtpFormService.GetInsurances(),
     mutationKey: ["GWT_INSURANCE"],
   });
 };

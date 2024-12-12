@@ -4,6 +4,8 @@
 export type TOtpStore = {
   otpForm: TOtpFormChildrenType;
   setOtpForm: (input: TOtpFormChildrenType) => void;
+  fullName: { name: string; family: string };
+  setFullName: (input: { name: string; family: string }) => void;
 };
 
 /**
@@ -32,7 +34,7 @@ export type TIdentityFormType = {
   address: string;
   branch: string;
   phone: string;
-  representationType: "Real" | "State";
+  representationType: "real" | "legal";
   representationName?: string;
 };
 /**
@@ -50,3 +52,20 @@ export type TOtpFormChildrenType =
   | "IdentityForm"
   | "MobilePhoneForm"
   | "NameAndFamilyForm";
+/**
+ *@description This Type is used just for  setIdentityForm
+ */
+export type TIdentityType = {
+  agent_code: string;
+  city_code: string;
+  county: string;
+  first_name: string;
+  insurance_branch: string;
+  last_name: string;
+  phone: string;
+  phone_number: string;
+  province: string;
+  Name?: string; // if the real is set
+  address: string;
+  agency_type: "real" | "legal";
+};

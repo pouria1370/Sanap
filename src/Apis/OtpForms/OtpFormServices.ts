@@ -1,3 +1,4 @@
+import { TIdentityType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
 import Axios from "../Axios_Infrastructure";
 
 class OtpFormServices {
@@ -23,8 +24,11 @@ class OtpFormServices {
   async GetCities() {
     Axios.get("/base/counties_wop/");
   }
-  async getInsurances() {
+  async GetInsurances() {
     Axios.get("/api/v2/app/selection_item/insurance_branch/wop_list/");
+  }
+  async SetIdentity(payLoad: TIdentityType) {
+    Axios.post("/api/v2/app/DEY/agent/verification/signup", payLoad);
   }
 }
 

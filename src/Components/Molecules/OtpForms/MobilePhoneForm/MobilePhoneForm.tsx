@@ -4,18 +4,30 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MobilePhoneFormSchema } from "./MobilePhoneFormSchema";
 import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
+import { useOtpForm } from "@store/OtpForms/useOtpForm";
+import useSendMobilePhoneNumber from "@apis/OtpForms/Hooks/useSendMobilePhoneNumber";
 const MobilePhoneForm = () => {
   const form = useForm<TMobilePhoneFormType>({
     resolver: zodResolver(MobilePhoneFormSchema),
     mode: "onBlur",
   });
-
+  const mutate = useSendMobilePhoneNumber();
+  const context = useOtpForm();
+  const onSubmit = async (formData: TMobilePhoneFormType) => {
+    mutate
+      .mutateAsync()
+      .then((res) => context.setOtpForm("ConfirmationCodeForm"));
+  };
   return (
     <FormLayout
       header="شماره موبایل خود را وارد کنید"
       subHeader="کد تائید برای شما ارسال خواهد شد"
     >
-      <form className="flex flex-col gap-20 items-center" {...form}>
+      <form
+        className="flex flex-col gap-20 items-center"
+        onSubmit={form.handleSubmit(onSubmit)}
+        {...form}
+      >
         <Controller
           name="mobile"
           control={form.control}

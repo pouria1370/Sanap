@@ -27,7 +27,8 @@
       "@customTypes/*": ["src/Types/*"], // Alias for Types
       "@hooks/*": ["src/Hooks/*"], // Alias for Hooks
       "@store/*": ["src/Store/*"], // Alias for Store
-      "@assets/*": ["src/Assets/*"] // Alias for Store
+      "@assets/*": ["src/Assets/*"], // Alias for Store
+      "@apis/*": ["src/Apis/*"] // Alias for Store
     }
   },
   "include": ["src"]

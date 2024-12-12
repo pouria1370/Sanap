@@ -7,7 +7,7 @@ export const IdentityFormSchema = z.object({
   address: z.string().min(1, { message: "وارد کردن ادرس الزامی است" }),
   branch: z.string().min(1, { message: "وارد کردن شعبه الزامی است" }),
   phone: z.string().min(1, { message: "وارد کردن شماره تماس الزامی است" }),
-  representationType: z.enum(["Real", "State"]),
+  representationType: z.enum(["real", "legal"]),
   representationName: z
     .string()
     .min(1, { message: "وارد کردن نام نمایندگی الزامی است" }),

@@ -4,18 +4,27 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { NameAndFamilyFormSchema } from "./NameAndFamilyFormSchema";
 import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
+import { useOtpForm } from "@store/OtpForms/useOtpForm";
 const NameAndFamilyForm = () => {
   const form = useForm<TNameAndFamilyFormType>({
     resolver: zodResolver(NameAndFamilyFormSchema),
     mode: "onBlur",
   });
-
+  const context = useOtpForm();
+  const onSubmit = async (formData: TNameAndFamilyFormType) => {
+    context.setFullName({ family: formData.family, name: formData.name });
+    context.setOtpForm("IdentityForm");
+  };
   return (
     <FormLayout
       header="شماره موبایل خود را وارد کنید"
       subHeader="کد تائید برای شما ارسال خواهد شد"
     >
-      <form className="flex flex-col gap-20 items-center" {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-20 items-center"
+        {...form}
+      >
         <Controller
           name="name"
           control={form.control}
