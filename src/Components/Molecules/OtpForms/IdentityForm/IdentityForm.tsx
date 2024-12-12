@@ -1,4 +1,4 @@
-import { TIdentityFormType } from "@customTypes/OtpForm/OtpForm";
+import { TIdentityFormType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
 import {
   Button,
   FormControlLabel,
@@ -11,7 +11,7 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IdentityFormSchema } from "./IdentityFormSchema";
-import FormLayout from "@components/Atoms/FormLayout/FormLayout";
+import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
 import { useState } from "react";
 const IdentityForm = () => {
   const form = useForm<TIdentityFormType>({

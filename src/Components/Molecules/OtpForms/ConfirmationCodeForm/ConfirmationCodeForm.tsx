@@ -1,9 +1,9 @@
-import { TConfirmationCodeFormType } from "@customTypes/OtpForm/OtpForm";
+import { TConfirmationCodeFormType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
 import { Button, FormHelperText, OutlinedInput } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ConfirmationCodeFormSchema } from "./ConfirmationCodeFormSchema";
-import FormLayout from "@components/Atoms/FormLayout/FormLayout";
+import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
 const ConfirmationCodeForm = () => {
   const form = useForm<TConfirmationCodeFormType>({
     resolver: zodResolver(ConfirmationCodeFormSchema),

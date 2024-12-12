@@ -1,9 +1,9 @@
-import { TMobilePhoneFormType } from "@customTypes/OtpForm/OtpForm";
+import { TMobilePhoneFormType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
 import { Button, FormHelperText, OutlinedInput } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MobilePhoneFormSchema } from "./MobilePhoneFormSchema";
-import FormLayout from "@components/Atoms/FormLayout/FormLayout";
+import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
 const MobilePhoneForm = () => {
   const form = useForm<TMobilePhoneFormType>({
     resolver: zodResolver(MobilePhoneFormSchema),

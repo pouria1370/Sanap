@@ -1,9 +1,9 @@
-import { TNameAndFamilyFormType } from "@customTypes/OtpForm/OtpForm";
+import { TNameAndFamilyFormType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
 import { Button, FormHelperText, OutlinedInput } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { NameAndFamilyFormSchema } from "./NameAndFamilyFormSchema";
-import FormLayout from "@components/Atoms/FormLayout/FormLayout";
+import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
 const NameAndFamilyForm = () => {
   const form = useForm<TNameAndFamilyFormType>({
     resolver: zodResolver(NameAndFamilyFormSchema),
