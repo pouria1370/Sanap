@@ -16,6 +16,7 @@ import { useState } from "react";
 import useSetIdentity from "@apis/OtpForms/Hooks/useSetIdentity";
 import { useOtpForm } from "@store/OtpForms/useOtpForm";
 import { useAuth } from "@store/Auth/useAuth";
+import { Navigate, useLocation, useNavigate } from "react-router";
 const IdentityForm = () => {
   const form = useForm<TIdentityFormType>({
     resolver: zodResolver(IdentityFormSchema),
@@ -29,6 +30,8 @@ TODO HERE I MUST FINISH THE FORM
   const mutate = useSetIdentity();
   const context = useOtpForm();
   const authContext = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const onSubmit = async (formData: TIdentityFormType) => {
     // mutate
     //   .mutateAsync({
@@ -49,9 +52,8 @@ TODO HERE I MUST FINISH THE FORM
     //     authContext.setToken("This is Token");
     //   });
     authContext.setToken("This is Token");
-    console.log("what");
+    navigate("/welcome");
   };
-  console.log(form.formState.dirtyFields);
   return (
     <FormLayout>
       <form
