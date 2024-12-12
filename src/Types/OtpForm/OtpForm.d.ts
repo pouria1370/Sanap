@@ -22,3 +22,23 @@ export type TConfirmationCodeFormType = {
   fourth: string;
   fifth: string;
 };
+/**
+ *@description This Type is used just for IdentityForm
+ */
+export type TIdentityFormType = {
+  representationCode: string;
+  state: string;
+  city: string;
+  address: string;
+  branch: string;
+  phone: string;
+  representationType: "Real" | "State";
+  representationName?: string;
+};
+/**
+ *@description This Type is used just for  NameAndFamilyForm
+ */
+export type TNameAndFamilyFormType = {
+  name: string;
+  family: string;
+};
