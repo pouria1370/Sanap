@@ -18,11 +18,7 @@ export type TMobilePhoneFormType = {
  *@description This Type is used just for ConfirmationCodeForm
  */
 export type TConfirmationCodeFormType = {
-  first: string;
-  second: string;
-  third: string;
-  fourth: string;
-  fifth: string;
+  digits: string[];
 };
 /**
  *@description This Type is used just for IdentityForm

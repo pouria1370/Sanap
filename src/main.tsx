@@ -32,6 +32,18 @@ const theme = createTheme({
         container: rootElement,
       },
     },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#008f9c", // Focused border color
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#008f9c", // Hover border color
+          },
+        },
+      },
+    },
   },
   direction: "rtl",
 });

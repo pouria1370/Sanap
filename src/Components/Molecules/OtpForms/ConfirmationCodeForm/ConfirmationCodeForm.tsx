@@ -1,18 +1,36 @@
 import { TConfirmationCodeFormType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
-import { Button, FormHelperText, OutlinedInput } from "@mui/material";
+import {
+  Button,
+  FormHelperText,
+  OutlinedInput,
+  TextField,
+} from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ConfirmationCodeFormSchema } from "./ConfirmationCodeFormSchema";
 import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
 import useValidateRepresentationCode from "@apis/OtpForms/Hooks/useValidateRepresentationCode";
 import { useOtpForm } from "@store/OtpForms/useOtpForm";
+import { useRef } from "react";
 const ConfirmationCodeForm = () => {
   const form = useForm<TConfirmationCodeFormType>({
-    resolver: zodResolver(ConfirmationCodeFormSchema),
     mode: "onBlur",
+    defaultValues: {
+      digits: ["", "", "", "", ""],
+    },
   });
   const mutate = useValidateRepresentationCode();
   const context = useOtpForm();
+  const refs = useRef<(HTMLInputElement | null)[]>([]);
+  const handleInputChange = (value: string, index: number) => {
+    if (!/^\d?$/.test(value)) {
+      return;
+    }
+
+    form.setValue(`digits.${index}`, value);
+
+    if (value !== "" && index < refs.current.length - 1) {
+      refs.current[index + 1]?.focus();
+    }
+  };
   const onSubmit = async (formData: TConfirmationCodeFormType) => {
     mutate.mutateAsync().then((res) => context.setOtpForm("NameAndFamilyForm"));
   };
@@ -24,101 +42,32 @@ const ConfirmationCodeForm = () => {
         {...form}
       >
         <div className="flex flex-row gap-2">
-          <Controller
-            name="first"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <div className="w-full">
-                <OutlinedInput
-                  error={fieldState.error ? true : false}
-                  {...form.register("first")}
+          {Array.from({ length: 5 }).map((_, index) => (
+            <Controller
+              key={index}
+              name={`digits.${index}`}
+              control={form.control}
+              render={({ field }) => (
+                <TextField
                   {...field}
-                  className="w-full rounded-xl"
+                  inputRef={(ref) => (refs.current[index] = ref)} // Store input reference
+                  onChange={(e) => handleInputChange(e.target.value, index)}
+                  slotProps={{
+                    input: {
+                      maxLength: 1,
+                      inputMode: "numeric",
+                      classes: {
+                        input: "rounded-xl text-primary-100",
+                      },
+                      pattern: "[0-9]*",
+                    },
+                  }}
+                  variant="outlined"
+                  size="small"
                 />
-                {fieldState.error && (
-                  <FormHelperText className="text-xs font-semibold text-red-600">
-                    {fieldState.error.message}
-                  </FormHelperText>
-                )}
-              </div>
-            )}
-          />
-          <Controller
-            name="second"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <div className="w-full">
-                <OutlinedInput
-                  error={fieldState.error ? true : false}
-                  {...form.register("second")}
-                  {...field}
-                  className="w-full rounded-xl"
-                />
-                {fieldState.error && (
-                  <FormHelperText className="text-xs font-semibold text-red-600">
-                    {fieldState.error.message}
-                  </FormHelperText>
-                )}
-              </div>
-            )}
-          />
-          <Controller
-            name="third"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <div className="w-full">
-                <OutlinedInput
-                  error={fieldState.error ? true : false}
-                  {...form.register("third")}
-                  {...field}
-                  className="w-full rounded-xl"
-                />
-                {fieldState.error && (
-                  <FormHelperText className="text-xs font-semibold text-red-600">
-                    {fieldState.error.message}
-                  </FormHelperText>
-                )}
-              </div>
-            )}
-          />
-          <Controller
-            name="fourth"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <div className="w-full">
-                <OutlinedInput
-                  error={fieldState.error ? true : false}
-                  {...form.register("fourth")}
-                  {...field}
-                  className="w-full rounded-xl"
-                />
-                {fieldState.error && (
-                  <FormHelperText className="text-xs font-semibold text-red-600">
-                    {fieldState.error.message}
-                  </FormHelperText>
-                )}
-              </div>
-            )}
-          />
-          <Controller
-            name="fifth"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <div className="w-full">
-                <OutlinedInput
-                  error={fieldState.error ? true : false}
-                  {...form.register("fifth")}
-                  {...field}
-                  className="w-full rounded-xl"
-                />
-                {fieldState.error && (
-                  <FormHelperText className="text-xs font-semibold text-red-600">
-                    {fieldState.error.message}
-                  </FormHelperText>
-                )}
-              </div>
-            )}
-          />
+              )}
+            />
+          ))}
         </div>
 
         <p className="text-xs font-semibold text-slate-500">ارسال مجدد کد</p>
