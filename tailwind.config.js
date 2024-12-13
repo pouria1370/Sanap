@@ -10,6 +10,14 @@ export default {
       fontFamily: {
         Iransans: ["Iransans"],
       },
+      screens: {
+        sm: "480px",
+        md: "768px",
+        lg: "976px",
+        xl: "1440px",
+        xxl: "1900px",
+        xxxl: "2500px",
+      },
       fontSize: {
         xs: ["0.75rem", { lineHeight: "1rem" }], // 12px
         sm: ["0.875rem", { lineHeight: "1.25rem" }], // 14px

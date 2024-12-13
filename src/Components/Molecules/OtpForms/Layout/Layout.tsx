@@ -13,9 +13,9 @@ const Layout = () => {
     NameAndFamilyForm: <NameAndFamilyForm />,
   };
   return (
-    <div className="flex flex-col items-center relative max-w-[500px]  my-20 bg-gray-200 container mx-auto">
+    <div className="flex flex-col items-center relative min-w-[400px] max-w-[500px] my-20 bg-gray-200 container mx-auto">
       <div className="bg-primary-100 items-center  size-full h-[200px] rounded-b-3xl " />
-      <div className="absolute mt-32 w-[80%]">{children[state.otpForm]}</div>
+      <div className="absolute mt-32  w-[80%]">{children[state.otpForm]}</div>
     </div>
   );
 };
