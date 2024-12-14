@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-let v = import.meta.env.DEV;
+let v = import.meta.env.VITE_KEY;
 const Waiting = () => {
   return (
     <div
@@ -20,7 +20,7 @@ const Waiting = () => {
           variant="contained"
           className="bg-primary-100 w-full text-sm sm:text-base lg:text-xl xl:text-2xl xxl:text-3xl text-slate-100"
         >
-          {v ? "yes" : "false"}
+          {v}
         </Button>
       </div>
     </div>
