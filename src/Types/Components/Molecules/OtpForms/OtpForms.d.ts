@@ -65,3 +65,10 @@ export type TIdentityType = {
   address: string;
   agency_type: "real" | "legal";
 };
+
+/**
+ *@description This Type is used just for OtpResendCode
+ */
+export type TOtpResendCodeType = {
+  timer: number;
+};
