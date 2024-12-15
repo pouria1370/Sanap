@@ -85,3 +85,9 @@ export type TFetchedToken = {
   access: string;
   refresh: string;
 };
+/**
+ *@description This Type is used just for Status after signUp
+ */
+export type TUserStatus = {
+  registration_status: string;
+};

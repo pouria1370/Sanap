@@ -7,6 +7,7 @@ import {
   TOtpIdentityFormCityType,
   TOtpIdentityFormProvinceType,
   TResponceGeneralType,
+  TUserStatus,
 } from "@customTypes/Apis/OtpForms/OtpForms";
 
 class OtpFormServices {
@@ -47,6 +48,11 @@ class OtpFormServices {
     return Axios.get<TOtpIdentityFormBranchType>(
       "/api/v2/app/selection_item/insurance_branch/wop_list/",
       { params: { insurance: "DEY", name, province } }
+    );
+  }
+  async GetStatus() {
+    return Axios.get<TResponceGeneralType<TUserStatus>>(
+      "/api/v2/app/DEY/agent/app_user_status/"
     );
   }
   async SetIdentity(payLoad: TIdentityType) {

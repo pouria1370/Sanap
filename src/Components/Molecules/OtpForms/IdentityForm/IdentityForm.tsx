@@ -19,7 +19,7 @@ import React, { useDeferredValue, useState } from "react";
 import useSetIdentity from "@apis/OtpForms/Hooks/useSetIdentity";
 import { useOtpForm } from "@store/OtpForms/useOtpForm";
 import { useNavigate } from "react-router";
-import useValidateRepresentationCode from "@apis/OtpForms/Hooks/useValidateRepresentationCode";
+import useValidateRepresentationCode from "@apis/OtpForms/Hooks/useGetUserStatus";
 import { TIdentityFormType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
 import useGetCities from "@apis/OtpForms/Hooks/useGetCities";
 import useGetStates from "@apis/OtpForms/Hooks/useGetStates";
