@@ -1,34 +1,59 @@
 import { TIdentityType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
 import Axios from "../Axios_Infrastructure";
+import { TResponceType } from "@customTypes/Apis/Auth/Auth";
+import {
+  TFetchedToken,
+  TOtpIdentityFormBranchType,
+  TOtpIdentityFormCityType,
+  TOtpIdentityFormProvinceType,
+  TResponceGeneralType,
+} from "@customTypes/Apis/OtpForms/OtpForms";
 
 class OtpFormServices {
-  async SendMobilePhoneNumber() {
-    Axios.post("/api/v2/app/DEY/agent/verification/signup/create_otp/", {
-      phone_number: "09000000000",
-    });
+  async SendMobilePhoneNumber(input: string) {
+    return Axios.post<TResponceType>(
+      "/api/v2/app/DEY/agent/verification/signup/create_otp/",
+      {
+        phone_number: input,
+      }
+    );
   }
-  async ValidateOtp() {
-    Axios.post("/api/v2/app/DEY/agent/verification/signup/validate_otp/", {
-      code: 55555,
-      phone_number: "09000000000",
-    });
+  async ValidateOtp({ input, mobile }: { input: string; mobile: string }) {
+    return Axios.post<TResponceType>(
+      "/api/v2/app/DEY/agent/verification/signup/validate_otp/",
+      {
+        code: input,
+        phone_number: mobile,
+      }
+    );
   }
-  async ValidateRepresentationCode() {
-    Axios.post("/api/v2/app/DEY/agent/verification/signup/check_agency_code/", {
-      agent_code: "123",
-    });
+  async ValidateRepresentationCode(input: string) {
+    return Axios.post<TResponceType>(
+      "/api/v2/app/DEY/agent/verification/signup/check_agency_code/",
+      {
+        agent_code: input,
+      }
+    );
   }
   async GetStates() {
-    Axios.get("/base/provinces_wop/");
+    return Axios.get<TOtpIdentityFormProvinceType[]>("/base/provinces_wop/");
   }
-  async GetCities() {
-    Axios.get("/base/counties_wop/");
+  async GetCities(id: string) {
+    return Axios.get<TOtpIdentityFormCityType[]>("/base/counties_wop/", {
+      params: { province: id },
+    });
   }
-  async GetInsurances() {
-    Axios.get("/api/v2/app/selection_item/insurance_branch/wop_list/");
+  async GetInsurances({ name, province }: { name: string; province: string }) {
+    return Axios.get<TOtpIdentityFormBranchType>(
+      "/api/v2/app/selection_item/insurance_branch/wop_list/",
+      { params: { insurance: "DEY", name, province } }
+    );
   }
   async SetIdentity(payLoad: TIdentityType) {
-    Axios.post("/api/v2/app/DEY/agent/verification/signup", payLoad);
+    return Axios.post<TResponceGeneralType<TFetchedToken>>(
+      "/api/v2/app/DEY/agent/verification/signup",
+      payLoad
+    );
   }
 }
 

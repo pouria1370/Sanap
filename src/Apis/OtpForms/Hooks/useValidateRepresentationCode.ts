@@ -3,7 +3,8 @@ import OtpFormService from "../OtpFormServices";
 
 const useValidateRepresentationCode = () => {
   return useMutation({
-    mutationFn: () => OtpFormService.ValidateOtp(),
+    mutationFn: (input: string) =>
+      OtpFormService.ValidateRepresentationCode(input),
     mutationKey: ["POST_MOBILE_PHONE"],
   });
 };

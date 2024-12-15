@@ -1,11 +1,11 @@
 import { TConfirmationCodeFormType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
-import { Button, TextField } from "@mui/material";
+import { Button, FormHelperText, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
-import useValidateRepresentationCode from "@apis/OtpForms/Hooks/useValidateRepresentationCode";
 import { useOtpForm } from "@store/OtpForms/useOtpForm";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import ResendOtp from "@components/ResendCodeTimer/ResendCodeTimer";
+import useValidateOtp from "@apis/OtpForms/Hooks/useValidateOtp";
 const ConfirmationCodeForm = () => {
   const form = useForm<TConfirmationCodeFormType>({
     mode: "onBlur",
@@ -13,20 +13,9 @@ const ConfirmationCodeForm = () => {
       digits: ["", "", "", "", ""],
     },
   });
-  const mutate = useValidateRepresentationCode();
+  const mutate = useValidateOtp();
   const context = useOtpForm();
   const refs = useRef<(HTMLInputElement | null)[]>([]);
-  // const handleInputChange = (value: string, index: number) => {
-  //   if (!/^\d?$/.test(value)) {
-  //     return;
-  //   }
-
-  //   form.setValue(`digits.${index}`, value);
-
-  //   if (value !== "" && index < refs.current.length - 1) {
-  //     refs.current[index + 1]?.focus();
-  //   }
-  // };
   const handleInputChange = (
     value: string,
     index: number,
@@ -54,9 +43,21 @@ const ConfirmationCodeForm = () => {
   };
   const digits = form.watch("digits");
   const isSubmitDisabled = digits.some((digit) => digit === "");
-
+  const [error, setError] = useState<string>("");
   const onSubmit = async (formData: TConfirmationCodeFormType) => {
-    mutate.mutateAsync().then((res) => context.setOtpForm("NameAndFamilyForm"));
+    await mutate.mutateAsync(
+      {
+        input: digits.join(""),
+        mobile: context.mobile,
+      },
+      {
+        onError: (error) => setError("کد وارد شده صحیح نیست"),
+        onSuccess: () => {
+          setError("");
+          context.setOtpForm("NameAndFamilyForm");
+        },
+      }
+    );
   };
 
   return (
@@ -66,6 +67,9 @@ const ConfirmationCodeForm = () => {
         className="flex flex-col gap-8 items-center"
         {...form}
       >
+        <span className="text-primary-100 text-sm  font-bold">
+          {context.mobile}
+        </span>
         <div className="flex flex-row gap-2">
           {Array.from({ length: 5 }).map((_, index) => (
             <Controller
@@ -94,6 +98,11 @@ const ConfirmationCodeForm = () => {
             />
           ))}
         </div>
+        {!!error && (
+          <FormHelperText className="text-xs w-full text-center font-semibold bg-red-100 p-4 mt-2 text-red-600">
+            {error}
+          </FormHelperText>
+        )}
         <ResendOtp timer={120} />
         <Button
           type="submit"

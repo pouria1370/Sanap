@@ -15,6 +15,9 @@ const NameAndFamilyForm = () => {
     context.setFullName({ family: formData.family, name: formData.name });
     context.setOtpForm("IdentityForm");
   };
+  const name = form.watch("name");
+  const family = form.watch("family");
+
   return (
     <FormLayout
       header="شماره موبایل خود را وارد کنید"
@@ -68,8 +71,8 @@ const NameAndFamilyForm = () => {
         <Button
           type="submit"
           variant="contained"
-          className="bg-primary-100 rounded-lg text-slate-100 w-full"
-          // disabled={form.formState.errors["mobile"] ? true : false}
+          className="bg-primary-100 disabled:bg-slate-400 rounded-lg text-slate-100 w-full"
+          disabled={!form.formState.isValid}
         >
           ادامه
         </Button>

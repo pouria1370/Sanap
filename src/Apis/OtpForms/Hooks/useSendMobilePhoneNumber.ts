@@ -3,7 +3,7 @@ import OtpFormService from "../OtpFormServices";
 
 const useSendMobilePhoneNumber = () => {
   return useMutation({
-    mutationFn: () => OtpFormService.SendMobilePhoneNumber(),
+    mutationFn: (input: string) => OtpFormService.SendMobilePhoneNumber(input),
     mutationKey: ["POST_MOBILE_PHONE"],
   });
 };

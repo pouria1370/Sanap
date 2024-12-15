@@ -1,10 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import OtpFormService from "../OtpFormServices";
 
 const useGetStates = () => {
-  return useMutation({
-    mutationFn: () => OtpFormService.GetStates(),
-    mutationKey: ["GET_STATES"],
+  return useQuery({
+    queryFn: () => OtpFormService.GetStates(),
+    queryKey: ["GET_STATES"],
   });
 };
 

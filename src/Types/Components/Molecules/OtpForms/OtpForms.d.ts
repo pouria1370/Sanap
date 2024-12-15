@@ -4,8 +4,12 @@
 export type TOtpStore = {
   otpForm: TOtpFormChildrenType;
   setOtpForm: (input: TOtpFormChildrenType) => void;
+  mobile: string;
+  setMobile: (input: string) => void;
   fullName: { name: string; family: string };
   setFullName: (input: { name: string; family: string }) => void;
+  isGettingCityEnabled: boolean;
+  setIsGettingCityEnabled: (input) => void;
 };
 
 /**
@@ -25,13 +29,13 @@ export type TConfirmationCodeFormType = {
  */
 export type TIdentityFormType = {
   representationCode: string;
-  state: string;
-  city: string;
+  state: string | null;
+  city: string | null;
   address: string;
   branch: string;
   phone: string;
   representationType: "real" | "legal";
-  representationName?: string;
+  representationName?: string | null;
 };
 /**
  *@description This Type is used just for  NameAndFamilyForm

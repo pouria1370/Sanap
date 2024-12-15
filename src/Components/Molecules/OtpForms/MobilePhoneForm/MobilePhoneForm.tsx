@@ -3,20 +3,30 @@ import { Button, FormHelperText, OutlinedInput } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MobilePhoneFormSchema } from "./MobilePhoneFormSchema";
-import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
 import { useOtpForm } from "@store/OtpForms/useOtpForm";
 import useSendMobilePhoneNumber from "@apis/OtpForms/Hooks/useSendMobilePhoneNumber";
+import { useState } from "react";
+import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
 const MobilePhoneForm = () => {
   const form = useForm<TMobilePhoneFormType>({
     resolver: zodResolver(MobilePhoneFormSchema),
     mode: "onBlur",
   });
   const mutate = useSendMobilePhoneNumber();
+  const [isError, setIsError] = useState<boolean | undefined>(undefined);
   const context = useOtpForm();
   const onSubmit = async (formData: TMobilePhoneFormType) => {
-    mutate
-      .mutateAsync()
-      .then((res) => context.setOtpForm("ConfirmationCodeForm"));
+    if (!form.getFieldState("mobile").error) {
+      await mutate.mutateAsync(form.getValues("mobile"), {
+        onError: () => setIsError(true),
+        onSuccess: () => {
+          setIsError(false);
+          context.setOtpForm("ConfirmationCodeForm");
+          context.setMobile(formData.mobile);
+        },
+      });
+    }
+    return;
   };
   return (
     <FormLayout
@@ -43,6 +53,11 @@ const MobilePhoneForm = () => {
               {fieldState.error && (
                 <FormHelperText className="text-xs font-semibold text-red-600">
                   {fieldState.error.message}
+                </FormHelperText>
+              )}
+              {isError && (
+                <FormHelperText className="text-xs font-semibold bg-red-100 p-4 mt-2 text-red-600">
+                  {"متاسفانه خطایی پیش امده لطفا دو دقیقه دیگر سعی کنید"}
                 </FormHelperText>
               )}
             </div>

@@ -7,6 +7,9 @@ export const useAuth = create<TAuthType>()(
       token: null,
       setToken: (input) => set({ token: input }),
       removeToken: () => set({ token: null }),
+      refreshToken: null,
+      setRefreshToken: (input) => set({ token: input }),
+      removeRefreshToken: () => set({ token: null }),
     }),
     {
       name: "Auth",
