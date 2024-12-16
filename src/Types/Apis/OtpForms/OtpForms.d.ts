@@ -65,7 +65,7 @@ export type TResponceGeneralErrorType = {
  *@description This Type is used just for SANAP-Responce-Error
  */
 export type TResponceGeneralType<T> = {
-  error_details: null | TResponceGeneralErrorType[];
+  error_details: null | TResponceGeneralErrorType;
   is_success: boolean;
   message: string;
   response: T;

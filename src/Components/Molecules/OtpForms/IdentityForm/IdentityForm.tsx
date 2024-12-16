@@ -19,31 +19,28 @@ import React, { useDeferredValue, useState } from "react";
 import useSetIdentity from "@apis/OtpForms/Hooks/useSetIdentity";
 import { useOtpForm } from "@store/OtpForms/useOtpForm";
 import { useNavigate } from "react-router";
-import useValidateRepresentationCode from "@apis/OtpForms/Hooks/useGetUserStatus";
 import { TIdentityFormType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
 import useGetCities from "@apis/OtpForms/Hooks/useGetCities";
 import useGetStates from "@apis/OtpForms/Hooks/useGetStates";
 import useGetInsurances from "@apis/OtpForms/Hooks/useGetInsurances";
-import { error } from "console";
 import { useAuth } from "@store/Auth/useAuth";
+import useValidateRepresentationCode from "@apis/OtpForms/Hooks/useValidateRepresentationCode copy";
 
 const IdentityForm = () => {
   const form = useForm<TIdentityFormType>({
     resolver: zodResolver(IdentityFormSchema),
     mode: "onChange",
     defaultValues: {
-      state: null,
-      city: null,
-      representationName: null,
+      state: "", // Empty string instead of null
+      city: "",
+      representationName: "",
       representationType: "real",
-      branch: undefined,
+      branch: "",
     },
   });
-  const [isRepresentationalCodeValid, setIsRepresentationalCodeValid] =
-    useState<boolean | undefined>(undefined);
+  const [error, setError] = useState<string>("");
 
   //#region States
-  const [representationType, setRepresentationType] = useState("real");
   const state = form.watch("state"); // Watch the state field
   const city = form.watch("city");
   const [selectedState, setSelectedState] = useState<string>("0");
@@ -86,47 +83,42 @@ const IdentityForm = () => {
         phone: form.getValues("phone"),
         phone_number: context.mobile,
         province: statesData?.data
-          .find((item) => item.name === form.getValues("state"))
+          .find((item) => item.name_split === form.getValues("state"))
           ?.id.toString() as string,
-        Name:
+        name:
           form.getValues("representationType") === "legal"
             ? form.getValues("branch")
             : "",
       },
       {
         onSuccess: (res) => {
-          auth.setToken(res.data.response.access);
-          auth.setRefreshToken(res.data.response.refresh);
+          auth.setToken(res.response.access);
+          auth.setRefreshToken(res.response.refresh);
           navigate("/welcome");
         },
-        onError: (error) => console.log(error),
+        onError: (error) => setError(error.error_details?.fa_details as string),
       }
     );
   };
 
   const checkIfTheRepresentationalCodeIsValid = async (e) => {
     if (!form.getFieldState("representationCode").error) {
-      const response = await validateRepresentationalCode.mutateAsync(
-        e.target.value,
-        {
-          onError: (err) => setIsRepresentationalCodeValid(false),
-          onSuccess: (data) => setIsRepresentationalCodeValid(true),
-        }
-      );
+      return await validateRepresentationalCode.mutateAsync(e.target.value, {
+        onError: (err) => setError(err.error_details?.fa_details as string),
+        onSuccess: () => setError(""),
+      });
     }
-    return;
   };
 
   //#endregion
+  console.log(form.formState.isValid, form.getValues(), form.formState.errors);
   return (
     <FormLayout>
-      {!isRepresentationalCodeValid &&
-        isRepresentationalCodeValid !== undefined && (
-          <div className="whitespace-pre bg-red-100 text-xs font-bold p-4  mb-5">
-            {`  کد نمایندگی ${form.getValues("representationCode")} ` +
-              `قبلا وارد شده است`}
-          </div>
-        )}
+      {error && error !== "" && (
+        <div className="whitespace-pre bg-red-100 text-xs font-bold p-4  mb-5">
+          {error}
+        </div>
+      )}
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-5 items-center"
@@ -162,7 +154,7 @@ const IdentityForm = () => {
                 {...field}
                 options={statesData?.data.map((item) => item.name_split) || []}
                 onChange={(_, value) => {
-                  field.onChange(value);
+                  field.onChange(value || "");
                   context.setIsGettingCityEnabled(true);
                   setSelectedState(
                     statesData?.data
@@ -196,7 +188,7 @@ const IdentityForm = () => {
                 options={
                   citiesData?.data.map((state) => state.name) as string[]
                 }
-                onChange={(_, value) => field.onChange(value)}
+                onChange={(_, value) => field.onChange(value || "")}
                 disabled={!state} // Disable if state is not selected
                 renderInput={(params) => (
                   <TextField {...params} label="شهر" placeholder="انتخاب شهر" />
@@ -251,7 +243,7 @@ const IdentityForm = () => {
                   setTypedInsuranceName(value);
                 }}
                 onChange={(_, value) => {
-                  field.onChange(value);
+                  field.onChange(value || "");
                 }}
                 disabled={!state}
                 renderInput={(params) => (
@@ -294,18 +286,18 @@ const IdentityForm = () => {
           name="representationType"
           control={form.control}
           render={({ field }) => (
-            <div className="w-full flex flex-row items-center justify-between">
+            <div className="w-full flex flex-row items-center justify-start">
               <FormLabel>نوع نمایندگی :</FormLabel>
               <RadioGroup row {...field}>
                 <FormControlLabel
                   value="real"
-                  control={<Radio />}
-                  label="حقیقی"
+                  control={<Radio size="small" />}
+                  label={<div className="text-sm">حقیقی</div>}
                 />
                 <FormControlLabel
                   value="legal"
-                  control={<Radio />}
-                  label="حقوقی"
+                  control={<Radio size="small" />}
+                  label={<div className="text-sm">حقوقی</div>}
                 />
               </RadioGroup>
             </div>
@@ -338,7 +330,11 @@ const IdentityForm = () => {
           type="submit"
           variant="contained"
           className="bg-primary-100 rounded-lg disabled:bg-slate-400 text-slate-100 w-full"
-          disabled={!form.formState.isValid}
+          disabled={
+            !form.formState.isValid || validateRepresentationalCode.isError
+              ? true
+              : false
+          }
         >
           ادامه
         </Button>

@@ -51,7 +51,7 @@ const ConfirmationCodeForm = () => {
         mobile: context.mobile,
       },
       {
-        onError: (error) => setError("کد وارد شده صحیح نیست"),
+        onError: (error) => setError(error.error_details?.fa_details as string),
         onSuccess: () => {
           setError("");
           context.setOtpForm("NameAndFamilyForm");

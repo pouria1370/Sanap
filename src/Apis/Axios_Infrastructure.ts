@@ -23,15 +23,16 @@ Axios.interceptors.request.use(
   }
 );
 
-// Example: Response Interceptor (Optional)
 Axios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    // Handle errors globally (e.g., show notifications or redirect)
-    if (error.response && error.response.status === 401) {
-      // Handle unauthorized error
+    // Ensure errors conform to your TResponceGeneralType
+    if (error.response) {
+      const standardizedError = {
+        ...error.response.data,
+        status_code: error.response.status,
+      };
+      return Promise.reject(standardizedError);
     }
     return Promise.reject(error);
   }

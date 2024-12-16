@@ -13,14 +13,16 @@ const MobilePhoneForm = () => {
     mode: "onBlur",
   });
   const mutate = useSendMobilePhoneNumber();
-  const [isError, setIsError] = useState<boolean | undefined>(undefined);
+  const [error, setError] = useState<string>("");
   const context = useOtpForm();
   const onSubmit = async (formData: TMobilePhoneFormType) => {
     if (!form.getFieldState("mobile").error) {
       await mutate.mutateAsync(form.getValues("mobile"), {
-        onError: () => setIsError(true),
+        onError: (error) => {
+          setError(error.error_details?.fa_details as string);
+        },
         onSuccess: () => {
-          setIsError(false);
+          setError("");
           context.setOtpForm("ConfirmationCodeForm");
           context.setMobile(formData.mobile);
         },
@@ -55,9 +57,9 @@ const MobilePhoneForm = () => {
                   {fieldState.error.message}
                 </FormHelperText>
               )}
-              {isError && (
+              {!!error && (
                 <FormHelperText className="text-xs font-semibold bg-red-100 p-4 mt-2 text-red-600">
-                  {"متاسفانه خطایی پیش امده لطفا دو دقیقه دیگر سعی کنید"}
+                  {error}
                 </FormHelperText>
               )}
             </div>

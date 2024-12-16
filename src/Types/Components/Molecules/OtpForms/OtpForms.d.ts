@@ -65,7 +65,7 @@ export type TIdentityType = {
   phone: string;
   phone_number: string;
   province: string;
-  Name?: string; // if the real is set
+  name?: string; // if the real is set
   address: string;
   agency_type: "real" | "legal";
 };

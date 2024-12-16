@@ -12,29 +12,41 @@ import {
 
 class OtpFormServices {
   async SendMobilePhoneNumber(input: string) {
-    return Axios.post<TResponceType>(
+    const responce = await Axios.post<TResponceGeneralType<null>>(
       "/api/v2/app/DEY/agent/verification/signup/create_otp/",
       {
         phone_number: input,
       }
     );
+    if (!responce.data.is_success) {
+      throw responce.data;
+    }
+    return responce.data;
   }
   async ValidateOtp({ input, mobile }: { input: string; mobile: string }) {
-    return Axios.post<TResponceType>(
+    const response = await Axios.post<TResponceGeneralType<string>>(
       "/api/v2/app/DEY/agent/verification/signup/validate_otp/",
       {
         code: input,
         phone_number: mobile,
       }
     );
+    if (!response.data.is_success) {
+      throw response.data;
+    }
+    return response.data;
   }
   async ValidateRepresentationCode(input: string) {
-    return Axios.post<TResponceType>(
+    const response = await Axios.post<TResponceGeneralType<string>>(
       "/api/v2/app/DEY/agent/verification/signup/check_agency_code/",
       {
         agent_code: input,
       }
     );
+    if (!response.data.is_success) {
+      throw response.data;
+    }
+    return response.data;
   }
   async GetStates() {
     return Axios.get<TOtpIdentityFormProvinceType[]>("/base/provinces_wop/");
@@ -56,10 +68,14 @@ class OtpFormServices {
     );
   }
   async SetIdentity(payLoad: TIdentityType) {
-    return Axios.post<TResponceGeneralType<TFetchedToken>>(
-      "/api/v2/app/DEY/agent/verification/signup",
+    const response = await Axios.post<TResponceGeneralType<TFetchedToken>>(
+      "/api/v2/app/DEY/agent/verification/signup/",
       payLoad
     );
+    if (!response.data.is_success) {
+      throw response.data;
+    }
+    return response.data;
   }
 }
 
