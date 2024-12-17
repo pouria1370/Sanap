@@ -27,15 +27,13 @@ export type TConfirmationCodeFormType = {
 /**
  *@description This Type is used just for IdentityForm
  */
-export type TIdentityFormType = {
-  representationCode: string;
-  state: string | null;
-  city: string | null;
-  address: string;
-  branch: string;
-  phone: string;
-  representationType: "real" | "legal";
-  representationName?: string | null;
+export type TRegisterFormType = {
+  password: string;
+  email: string;
+};
+export type TLoginFormType = {
+  password: string;
+  email: string;
 };
 /**
  *@description This Type is used just for  NameAndFamilyForm

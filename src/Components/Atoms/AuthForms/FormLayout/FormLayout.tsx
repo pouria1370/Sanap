@@ -1,6 +1,5 @@
 import { TFormLayOut } from "@customTypes/Components/Atom/Atom";
 import { Card, CardHeader, CardContent } from "@mui/material";
-import React from "react";
 
 const FormLayout = ({ children, header, subHeader }: TFormLayOut) => {
   return (

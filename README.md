@@ -1,8 +1,8 @@
-# Sanap sample project
+# Novin sample project
 
 ### Author: Pouria Kalantari
 
-### Project: Sample Form submission with OTP
+### Project: Sample Form submission with Credential(Clerk)
 
 ### Stacks:
 
