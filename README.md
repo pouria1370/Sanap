@@ -7,7 +7,7 @@
 ### Stacks:
 
 - React
-- Tanstack-query/Axios (for Api handling)
+- Tanstack-query/Axios (for Api handling) 
 - MUI-Tailwind (for styling)
 - React-Router (for route guarding and navigation)
 - React-hook-form (for optimized minimum-render form handling)
