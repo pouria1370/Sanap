@@ -3,8 +3,8 @@ import "./App.css";
 
 import PageNotFound from "./Pages/PageNotFound";
 import RequireAuth from "./Pages/RequireAuth";
-import Waiting from "./Pages/Waiting";
 import AuthViewer from "./Pages/AuthViewer";
+import UsersViewer from "./Pages/UsersViewer";
 function App() {
   return (
     <BrowserRouter>
@@ -12,7 +12,7 @@ function App() {
         <Route index element={<AuthViewer />} />
         <Route path="/login" element={<AuthViewer />} />
         <Route element={<RequireAuth />}>
-          <Route path="/welcome" element={<Waiting />} />
+          <Route path="/welcome" element={<UsersViewer />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
