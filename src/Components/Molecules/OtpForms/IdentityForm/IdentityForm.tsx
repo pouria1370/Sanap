@@ -67,29 +67,50 @@ const IdentityForm = () => {
   //#region Handlers
   const onSubmit = async (formData) => {
     mutate.mutate(
-      {
-        address: form.getValues("address"),
-        agency_type: form.getValues("representationType"),
-        agent_code: form.getValues("representationCode"),
-        city_code: "021",
-        county: citiesData?.data
-          .find((item) => item.name === form.getValues("city"))
-          ?.id.toString() as string,
-        first_name: context.fullName.name,
-        insurance_branch: insurancesData?.data.response
-          .find((item) => item.name === form.getValues("representationName"))
-          ?.id.toString() as string,
-        last_name: context.fullName.family,
-        phone: form.getValues("phone"),
-        phone_number: context.mobile,
-        province: statesData?.data
-          .find((item) => item.name_split === form.getValues("state"))
-          ?.id.toString() as string,
-        name:
-          form.getValues("representationType") === "legal"
-            ? form.getValues("branch")
-            : "",
-      },
+      form.getValues("representationType") === "legal"
+        ? {
+            address: form.getValues("address"),
+            agency_type: form.getValues("representationType"),
+            agent_code: form.getValues("representationCode"),
+            city_code: "021",
+            county: citiesData?.data
+              .find((item) => item.name === form.getValues("city"))
+              ?.id.toString() as string,
+            first_name: context.fullName.name,
+            insurance_branch: insurancesData?.data.response
+              .find(
+                (item) => item.name === form.getValues("representationName")
+              )
+              ?.id.toString() as string,
+            last_name: context.fullName.family,
+            phone: form.getValues("phone"),
+            phone_number: context.mobile,
+            province: statesData?.data
+              .find((item) => item.name_split === form.getValues("state"))
+              ?.id.toString() as string,
+            name: form.getValues("branch"),
+          }
+        : {
+            address: form.getValues("address"),
+            agency_type: form.getValues("representationType"),
+            agent_code: form.getValues("representationCode"),
+            city_code: "021",
+            county: citiesData?.data
+              .find((item) => item.name === form.getValues("city"))
+              ?.id.toString() as string,
+            first_name: context.fullName.name,
+            insurance_branch: insurancesData?.data.response
+              .find(
+                (item) => item.name === form.getValues("representationName")
+              )
+              ?.id.toString() as string,
+            last_name: context.fullName.family,
+            phone: form.getValues("phone"),
+            phone_number: context.mobile,
+            province: statesData?.data
+              .find((item) => item.name_split === form.getValues("state"))
+              ?.id.toString() as string,
+          },
       {
         onSuccess: (res) => {
           auth.setToken(res.response.access);
