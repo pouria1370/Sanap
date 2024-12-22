@@ -15,7 +15,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IdentityFormSchema } from "./IdentityFormSchema";
 import FormLayout from "@components/Atoms/OtpForms/FormLayout/FormLayout";
-import React, { useDeferredValue, useState } from "react";
+import React, { useDeferredValue, useLayoutEffect, useState } from "react";
 import useSetIdentity from "@apis/OtpForms/Hooks/useSetIdentity";
 import { useOtpForm } from "@store/OtpForms/useOtpForm";
 import { useNavigate } from "react-router";
@@ -111,7 +111,10 @@ const IdentityForm = () => {
   };
 
   //#endregion
-  console.log(form.formState.isValid, form.getValues(), form.formState.errors);
+
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute("dir", "rtl");
+  }, []);
   return (
     <FormLayout>
       {error && error !== "" && (

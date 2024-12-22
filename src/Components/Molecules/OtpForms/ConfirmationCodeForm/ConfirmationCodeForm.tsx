@@ -70,7 +70,7 @@ const ConfirmationCodeForm = () => {
         <span className="text-primary-100 text-sm  font-bold">
           {context.mobile}
         </span>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row-reverse gap-2">
           {Array.from({ length: 5 }).map((_, index) => (
             <Controller
               key={index}
