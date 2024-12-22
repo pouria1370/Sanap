@@ -53,12 +53,12 @@ const MobilePhoneForm = () => {
                 className="w-full rounded-xl"
               />
               {fieldState.error && (
-                <FormHelperText className="text-xs  text-right font-semibold text-red-600">
+                <FormHelperText className="text-xs font-semibold text-red-600">
                   {fieldState.error.message}
                 </FormHelperText>
               )}
               {!!error && (
-                <FormHelperText className="text-xs text-right font-semibold bg-red-100 p-4 mt-2 text-red-600">
+                <FormHelperText className="text-xs font-semibold bg-red-100 p-4 mt-2 text-red-600">
                   {error}
                 </FormHelperText>
               )}

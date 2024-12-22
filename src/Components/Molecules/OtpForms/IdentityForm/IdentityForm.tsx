@@ -135,10 +135,7 @@ const IdentityForm = () => {
   };
 
   //#endregion
-  console.log(form.formState.isValid, form.getValues());
-  React.useLayoutEffect(() => {
-    document.body.setAttribute("dir", "rtl");
-  }, []);
+  console.log(form.formState.isValid, form.getValues(), form.formState.errors);
   return (
     <FormLayout>
       {error && error !== "" && (
@@ -159,16 +156,11 @@ const IdentityForm = () => {
               className="w-full"
               variant="outlined"
             >
-              {/* <InputLabel>کد نمایندگی</InputLabel> */}
-              <TextField
+              <InputLabel>کد نمایندگی</InputLabel>
+              <OutlinedInput
                 {...field}
                 label="کد نمایندگی"
                 onBlur={(e) => checkIfTheRepresentationalCodeIsValid(e)}
-                slotProps={{
-                  inputLabel: {
-                    className: "text-right!",
-                  },
-                }}
               />
               {fieldState.error && (
                 <FormHelperText>{fieldState.error.message}</FormHelperText>
