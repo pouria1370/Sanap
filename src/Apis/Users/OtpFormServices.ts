@@ -1,4 +1,4 @@
-import { TIdentityType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
+import { TIdentityType } from "@customTypes/Components/Molecules/AuthForms/AuthForms";
 import Axios from "../Axios_Infrastructure";
 import { TResponceType } from "@customTypes/Apis/Auth/Auth";
 import {

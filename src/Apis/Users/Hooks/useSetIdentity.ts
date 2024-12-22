@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import OtpFormService from "../OtpFormServices";
-import { TIdentityType } from "@customTypes/Components/Molecules/OtpForms/OtpForms";
+import { TIdentityType } from "@customTypes/Components/Molecules/AuthForms/AuthForms";
 import {
   TFetchedToken,
   TResponceGeneralType,

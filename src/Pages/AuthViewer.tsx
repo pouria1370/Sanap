@@ -1,8 +1,8 @@
-import Layout from "@components/Molecules/OtpForms/Layout/Layout";
+import Layout from "@components/Molecules/AuthForms/Layout/Layout";
 import { useAuth } from "@store/Auth/useAuth";
 import { Navigate, useLocation } from "react-router";
 
-const OtpFormsViewer = () => {
+const AuthViewer = () => {
   const token = useAuth();
   const location = useLocation();
   return !token.token ? (
@@ -12,4 +12,4 @@ const OtpFormsViewer = () => {
   );
 };
 
-export default OtpFormsViewer;
+export default AuthViewer;
