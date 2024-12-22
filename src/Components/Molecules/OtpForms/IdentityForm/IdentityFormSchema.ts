@@ -28,7 +28,7 @@ export const IdentityFormSchema = z
   .refine(
     (data) => {
       if (data.representationType === "legal" && !data.branch) {
-        return false;
+        return true;
       }
       return true;
     },
